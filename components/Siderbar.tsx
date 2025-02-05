@@ -28,9 +28,7 @@ const Siderbar = ({ user }: SiderbarProps) => {
             />
             <h1 className="sidebar-logo">Horizon</h1>
           </Link>
-          <div>
-            {/* TODO: Add sidebar pannel*/}
-          </div>
+          {/* TODO: Add sidebar pannel*/}
         </div>
         {sidebarLinks.map((item) => {
           const isActive =

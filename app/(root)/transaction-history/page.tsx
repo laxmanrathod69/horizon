@@ -55,7 +55,7 @@ const TransactionHistory = async ({
           <div className="transactions-account-balance">
             <p className="text-14">Current balance</p>
             <p className="text-24 text-center font-bold">
-              {formatAmount(account?.data.currentBalance)}
+              {formatAmount(account?.data?.currentBalance)}
             </p>
           </div>
         </div>
