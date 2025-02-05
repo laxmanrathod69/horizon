@@ -1,7 +1,7 @@
 <div align="center">
   <br />
-    <a href="https://miro-clone-w.vercel.app" target="_blank">
-      <img src="https://github.com/laxman-rathod/Horizon-Banking-App/blob/main/public/horizon-homepage.png" alt="Project Banner">
+    <a href="https://horizon-banking-sigma.vercel.app/" target="_blank">
+      <img src="https://github.com/laxmanrathod69/horizon/blob/main/public/horizon_thumbnail.png" alt="Project Banner">
     </a>
   <br />
   <div>
@@ -75,7 +75,7 @@ Make sure you have the following installed on your machine:
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/laxman-rathod/Horizon-Banking-App.git
+git clone https://github.com/your-username/horizon.git
 ```
 
 2. **Install dependencies:**
