@@ -106,7 +106,7 @@
 
   /* Home */
   .home {
-    @apply no-scrollbar flex w-full flex-row max-xl:max-h-screen max-xl:overflow-y-scroll;
+    @apply no-scrollbar w-full flex flex-row max-xl:max-h-screen max-xl:overflow-y-scroll;
   }
 
   .home-content {
@@ -139,10 +139,6 @@
 
   .view-all-btn {
     @apply text-14 rounded-lg border border-gray-300 px-4 py-2.5 font-semibold text-gray-700;
-  }
-
-  .recent-transactions {
-    @apply flex w-full flex-col gap-6;
   }
 
   .recent-transactions-label {

@@ -1,26 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
 
 import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
 import CustomInput from "./CustomInput";
-
-import { signIn, signUp } from "@/lib/actions/user.actions";
 import { authFormSchema } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const formSchema = authFormSchema(type);
 
   // 1. Define your form.
@@ -34,38 +34,39 @@ const AuthForm = ({ type }: { type: string }) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     setIsLoading(true);
+
     try {
+      // Sign up with Appwrite & create plaid token
+
       if (type === "sign-up") {
         const userData = {
           firstName: data.firstName!,
           lastName: data.lastName!,
-          email: data.email,
-          password: data.password,
           address1: data.address1!,
           city: data.city!,
           state: data.state!,
-          ssn: data.ssn!,
           postalCode: data.postalCode!,
           dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password,
         };
 
         const newUser = await signUp(userData);
+
         setUser(newUser);
       }
+
       if (type === "sign-in") {
         const response = await signIn({
           email: data.email,
           password: data.password,
         });
 
-        if (response) {
-          router.push("/");
-        }
+        if (response) router.push("/");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -78,16 +79,17 @@ const AuthForm = ({ type }: { type: string }) => {
         <Link href="/" className="cursor-pointer flex items-center gap-1">
           <Image
             src="/icons/logo.svg"
-            alt="Horizon logo"
             width={34}
             height={34}
+            alt="Horizon logo"
           />
           <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
             Horizon
           </h1>
         </Link>
+
         <div className="flex flex-col gap-1 md:gap-3">
-          <h1 className="  text-24 lg:text-36 font-semibold text-gray-900">
+          <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
             <p className="text-16 font-normal text-gray-600">
               {user
@@ -118,7 +120,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="lastName"
                       label="Last Name"
-                      placeholder="Enter your last name"
+                      placeholder="Enter your first name"
                     />
                   </div>
                   <CustomInput
@@ -144,7 +146,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="postalCode"
                       label="Postal Code"
-                      placeholder="Example: 12345 or 12345-6789"
+                      placeholder="Example: 11101"
                     />
                   </div>
                   <div className="flex gap-4">
@@ -158,23 +160,26 @@ const AuthForm = ({ type }: { type: string }) => {
                       control={form.control}
                       name="ssn"
                       label="SSN"
-                      placeholder="Example: 123456789"
+                      placeholder="Example: 1234"
                     />
                   </div>
                 </>
               )}
+
               <CustomInput
                 control={form.control}
                 name="email"
                 label="Email"
                 placeholder="Enter your email"
               />
+
               <CustomInput
                 control={form.control}
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
               />
+
               <div className="flex flex-col gap-4">
                 <Button type="submit" disabled={isLoading} className="form-btn">
                   {isLoading ? (
