@@ -6,25 +6,25 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sidebarLinks } from "@/constants";
 import Footer from "./Footer";
 
 const MobileNav = ({ user }: MobileNavProps) => {
   const pathname = usePathname();
 
   return (
-    <section className="w-full max-w-[264px]">
+    <section className="w-fulll max-w-[264px]">
       <Sheet>
         <SheetTrigger>
           <Image
             src="/icons/hamburger.svg"
-            alt="Menu"
             width={30}
             height={30}
+            alt="menu"
             className="cursor-pointer"
           />
         </SheetTrigger>
@@ -35,9 +35,9 @@ const MobileNav = ({ user }: MobileNavProps) => {
           >
             <Image
               src="/icons/logo.svg"
-              alt="Horizon logo"
               width={34}
               height={34}
+              alt="Horizon logo"
             />
             <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
               Horizon
@@ -45,7 +45,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
           </Link>
           <div className="mobilenav-sheet">
             <SheetClose asChild>
-              <nav className="flex flex-col h-full gap-6 pt-16 text-white">
+              <nav className="flex h-full flex-col gap-6 pt-16 text-white">
                 {sidebarLinks.map((item) => {
                   const isActive =
                     pathname === item.route ||
@@ -54,8 +54,8 @@ const MobileNav = ({ user }: MobileNavProps) => {
                   return (
                     <SheetClose asChild key={item.route}>
                       <Link
-                        key={item.label}
                         href={item.route}
+                        key={item.label}
                         className={cn("mobilenav-sheet_close w-full", {
                           "bg-bank-gradient": isActive,
                         })}
@@ -71,7 +71,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
                         />
                         <p
                           className={cn("text-16 font-semibold text-black-2", {
-                            "!text-white": isActive,
+                            "text-white": isActive,
                           })}
                         >
                           {item.label}
@@ -83,6 +83,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
                 USER
               </nav>
             </SheetClose>
+
             <Footer user={user} type="mobile" />
           </div>
         </SheetContent>

@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughtnutChart = ({ accounts }: DoughnutChartProps) => {
+const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
   const accountNames = accounts.map((a) => a.name);
   const balances = accounts.map((a) => a.currentBalance);
 
@@ -36,4 +35,4 @@ const DoughtnutChart = ({ accounts }: DoughnutChartProps) => {
   );
 };
 
-export default DoughtnutChart;
+export default DoughnutChart;
