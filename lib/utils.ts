@@ -205,16 +205,8 @@ export const authFormSchema = (type: string) =>
     state:
       type === "sign-in" ? z.string().optional() : z.string().min(2).max(2),
     postalCode:
-      type === "sign-in"
-        ? z.string().optional()
-        : z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid postal code format"),
-    ssn:
-      type === "sign-in"
-        ? z.string().optional()
-        : z
-            .string()
-            .length(9)
-            .regex(/^\d{9}$/, "SSN must be 9 digits"),
+      type === "sign-in" ? z.string().optional() : z.string().length(5),
+    ssn: type === "sign-in" ? z.string().optional() : z.string().length(4),
     dateOfBirth: type === "sign-in" ? z.string().optional() : z.string().min(3),
 
     // Sign in
