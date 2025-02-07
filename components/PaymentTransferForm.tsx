@@ -28,8 +28,8 @@ import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  name: z.string().min(4, "Transfer note is too short"),
-  amount: z.string().min(4, "Amount is too short"),
+  note: z.string().optional(),
+  amount: z.number().min(1),
   senderBank: z.string().min(4, "Please select a valid bank account"),
   sharableId: z.string().min(8, "Please select a valid sharable Id"),
 });
@@ -41,9 +41,8 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      note: "",
       email: "",
-      amount: "",
       senderBank: "",
       sharableId: "",
     },
@@ -70,7 +69,7 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
       // create transfer transaction
       if (transfer) {
         const transaction = {
-          name: data.name,
+          note: data.note,
           amount: data.amount,
           senderId: senderBank.userId.$id,
           senderBankId: senderBank.$id,
@@ -83,14 +82,14 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
 
         if (newTransaction) {
           form.reset();
+          setIsLoading(false);
           router.push("/");
         }
       }
     } catch (error) {
       console.error("Submitting create transfer request failed: ", error);
+      return setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -127,7 +126,7 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
 
         <FormField
           control={form.control}
-          name="name"
+          name="note"
           render={({ field }) => (
             <FormItem className="border-t border-gray-200">
               <div className="payment-transfer_form-item pb-6 pt-5">
@@ -224,9 +223,12 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
                 <div className="flex w-full flex-col">
                   <FormControl>
                     <Input
-                      placeholder="ex: 5.00"
+                      type="number"
+                      placeholder="Enter the amount"
                       className="input-class"
                       {...field}
+                      value={field.value as number}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
                     />
                   </FormControl>
                   <FormMessage className="text-12 text-red-500" />
@@ -237,7 +239,11 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
         />
 
         <div className="payment-transfer_btn-box">
-          <Button type="submit" className="payment-transfer_btn">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="payment-transfer_btn"
+          >
             {isLoading ? (
               <>
                 <Loader2 size={20} className="animate-spin" /> &nbsp; Sending...

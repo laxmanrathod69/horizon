@@ -24,15 +24,14 @@ const CategoryBadge = ({ category }: CategoryBadgeProps) => {
   return (
     <div className={cn("category-badge", borderColor, chipBackgroundColor)}>
       <div className={cn("size-2 rounded-full", backgroundColor)} />
-      <p className={cn("text-[12px] font-medium", textColor)}>{category}</p>
+      <p className={cn("text-xs font-medium", textColor)}>{category}</p>
     </div>
   );
 };
 
-// FIX: Table width
 const TransactionsTable = ({ transactions }: TransactionTableProps) => {
   return (
-    <Table>
+    <Table className="w-full table-fixed text-xs overflow-hidden">
       <TableHeader className="bg-[#f9fafb]">
         <TableRow>
           <TableHead className="px-2">Transaction</TableHead>
@@ -58,16 +57,16 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                 isDebit || amount[0] === "-" ? "bg-[#FFFBFA]" : "bg-[#F6FEF9]"
               } !over:bg-none !border-b-DEFAULT`}
             >
-              <TableCell className="max-w-[250px] pl-2 pr-10">
+              <TableCell className="max-w-[250px] pl-2 pr-4">
                 <div className="flex items-center gap-3">
-                  <h1 className="text-14 truncate font-semibold text-[#344054]">
+                  <h1 className="text-xs truncate font-semibold text-[#344054]">
                     {removeSpecialCharacters(t.name)}
                   </h1>
                 </div>
               </TableCell>
 
               <TableCell
-                className={`pl-2 pr-10 font-semibold ${
+                className={`pl-2 pr-4 font-semibold ${
                   isDebit || amount[0] === "-"
                     ? "text-[#f04438]"
                     : "text-[#039855]"
@@ -76,19 +75,19 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                 {isDebit ? `-${amount}` : isCredit ? amount : amount}
               </TableCell>
 
-              <TableCell className="pl-2 pr-10">
+              <TableCell className="pl-2 pr-4">
                 <CategoryBadge category={status} />
               </TableCell>
 
-              <TableCell className="min-w-32 pl-2 pr-10">
+              <TableCell className="min-w-32 pl-2 pr-4">
                 {formatDateTime(new Date(t.date)).dateTime}
               </TableCell>
 
-              <TableCell className="pl-2 pr-10 capitalize min-w-24">
+              <TableCell className="pl-2 pr-4 capitalize min-w-24">
                 {t.paymentChannel}
               </TableCell>
 
-              <TableCell className="pl-2 pr-10 max-md:hidden">
+              <TableCell className="pl-2 max-md:hidden">
                 <CategoryBadge category={t.category} />
               </TableCell>
             </TableRow>

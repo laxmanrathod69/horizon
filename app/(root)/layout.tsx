@@ -10,14 +10,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const loggedIn = await getLoggedInUser();
-
-  if (!loggedIn) redirect("/sign-in");
+  if (!loggedIn) return redirect("/sign-in");
 
   return (
     <main className="flex h-screen w-full font-inter">
       <Sidebar user={loggedIn} />
 
-      <div className="flex size-full flex-col">
+      <div className="flex w-full h-full flex-col">
         <div className="root-layout">
           <Image src="/icons/logo.svg" width={30} height={30} alt="logo" />
           <div>
