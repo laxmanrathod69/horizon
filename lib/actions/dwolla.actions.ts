@@ -55,16 +55,11 @@ export const createDwollaCustomer = async (
   newCustomer: NewDwollaCustomerParams
 ) => {
   try {
-    const formattedCustomer = {
-      ...newCustomer,
-      ssn: newCustomer.ssn.replace(/\D/g, ""),
-      postalCode: newCustomer.postalCode.replace(/[^\d]/g, "").slice(0, 5),
-    };
     return await dwollaClient
-      .post("customers", formattedCustomer)
+      .post("customers", newCustomer)
       .then((res) => res.headers.get("location"));
   } catch (err) {
-    console.error("Creating a Dwolla Customer Failed: ", { err });
+    console.error("Creating a Dwolla Customer Failed: ", err);
   }
 };
 
